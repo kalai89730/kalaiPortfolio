@@ -123,7 +123,6 @@ function setupContactForm() {
     contactForm.addEventListener('submit', async function(e) {
         e.preventDefault();
 
-        // Get form data
         const formData = new FormData(contactForm);
 
         const name = formData.get('name');
@@ -131,7 +130,6 @@ function setupContactForm() {
         const subject = formData.get('subject');
         const message = formData.get('message');
 
-        // Validation
         if (!name || !email || !subject || !message) {
             showNotification('Please fill in all fields', 'error');
             return;
