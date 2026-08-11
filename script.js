@@ -109,34 +109,73 @@ function setupAnimations() {
     });
 }
 
+// Google Apps Script Web App URL
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyNWtpPDDeVE0YX2suMhXJ3Ox6hEb9N4DTQyPpR-7E7HNoBd2R8nHqLOqAn-rC2BKHh/exec";
+
 // Contact form handling
 function setupContactForm() {
     const contactForm = document.getElementById('contactForm');
-    
-    contactForm.addEventListener('submit', function(e) {
+
+    if (!contactForm) {
+        return;
+    }
+
+    contactForm.addEventListener('submit', async function(e) {
         e.preventDefault();
-        
+
         // Get form data
         const formData = new FormData(contactForm);
+
         const name = formData.get('name');
         const email = formData.get('email');
         const subject = formData.get('subject');
         const message = formData.get('message');
-        
-        // Simple validation
+
+        // Validation
         if (!name || !email || !subject || !message) {
             showNotification('Please fill in all fields', 'error');
             return;
         }
-        
+
         if (!isValidEmail(email)) {
             showNotification('Please enter a valid email address', 'error');
             return;
         }
-        
-        // Simulate form submission
-        showNotification('Message sent successfully! I\'ll get back to you soon.', 'success');
-        contactForm.reset();
+
+        const data = {
+            name: name,
+            email: email,
+            subject: subject,
+            message: message
+        };
+
+        try {
+            showNotification('Sending message...', 'info');
+
+            await fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'text/plain;charset=utf-8'
+                },
+                body: JSON.stringify(data)
+            });
+
+            showNotification(
+                'Message sent successfully! I\'ll get back to you soon.',
+                'success'
+            );
+
+            contactForm.reset();
+
+        } catch (error) {
+            console.error('Error:', error);
+
+            showNotification(
+                'Failed to send message. Please try again.',
+                'error'
+            );
+        }
     });
 }
 
