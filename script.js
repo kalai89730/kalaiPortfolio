@@ -110,7 +110,7 @@ function setupAnimations() {
 }
 
 // Google Apps Script Web App URL
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwxvSek1eVlVh6eL0JfGOv_3avyTkEwrPuORIP2xjt735_venzm3XhH5WlIFJcnSF3C/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzizjjsGlm0TKj7D_thCtZsK4hU9aKSJAqRY_nXed3fmqCZtO0ReXaYWK5FHrCFcD34/exec";
 
 // Contact form handling
 function setupContactForm() {
